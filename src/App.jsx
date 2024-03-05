@@ -1,18 +1,19 @@
 
 import { useState,useEffect } from 'react'
-// import 'dotenv/config'
 const ACCESS_TOKEN = import .meta.env.VITE_ACCESS_TOKEN;
 import Main from './Components/Main'
+
 function App() {
   const [trendingCoinsData,setTrendingCoinsData] = useState([]);
   const [trendingNFTSData, setTrendingNFTSData] = useState([]);
   const [bitcoinData,setBitcoinData] = useState([]);
   const [refresh,setRefresh] = useState(false);
- 
+
+  //API CALLS  
   async function getTrendingData() {
     const options = {
       method: 'GET',
-      headers: { 'x_cg_demo_api_key': ACCESS_TOKEN} // Fix: Removed '&' before the key
+      headers: { 'x_cg_demo_api_key': ACCESS_TOKEN}
     };
     try {
       const response = await fetch('https://api.coingecko.com/api/v3/search/trending', options);
@@ -30,42 +31,33 @@ function App() {
       header:{'x_cg_demo_api_key': ACCESS_TOKEN}
     };
     try{
-      const response = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin',options);
+      const response = await fetch('https://api.coingecko.com/api/v3/coins/ethereum',options);
       const data = await response.json();
       setBitcoinData(data)
       console.log('bitcoinData from function: ',bitcoinData); 
     }
     catch(err){
-      console.log(err);
+      console.log('error: ', err);
     }
   }
-
+  // REFRESH FOR NEW DATA
   function handleRefresh(){
     setRefresh(x=>!x)
-    console.log(refresh);
   } 
-
+  // FETCH DATA AFTER INITIAL RENDER AS WELL AS EVERYTIME REFRESH STATE IS FLIPPED
   useEffect(()=>{
     getBitcoinData();
     getTrendingData();
   },[refresh])
-
-  function handleClick(){
-    setShowLabels(x=>!x);
-  }
-
-
-  
   return (
     <>
       <Main 
-        //State data is being passed down as prop
+        // PASS API DATA SAVED INTO STATE AS PROPS
         trendingCoinsData = {trendingCoinsData}
         trendingNFTData = {trendingNFTSData}
         bitcoinData = {bitcoinData}
         handleRefresh = {handleRefresh}
       />
-   
     </>
   )
 }

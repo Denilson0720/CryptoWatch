@@ -42,7 +42,7 @@ hr{
     display:flex
 }
 .nav--buttons{
-    color:white;
+    /* color:white; */
     width:10rem;
     display: flex;
     height:3rem;
@@ -355,6 +355,21 @@ hr{
     width:100%;
     /* border:2px solid red; */
 }
-.nft--graph>h5{
-    /* display:none; */
+/* BITCOIN STYLING */
+.trending--coins--headline{
+    text-align: center;
+}
+.bitcoin--container{
+    display:flex;
+    justify-content: center;
+    border:2px solid teal;
+    /* align-items: center; */
+}
+.bitcoin--contianer{
+    border:2px solid red;
+}
+.bitcoin--button{
+    color:white;
+    /* height:10rem;     */
+    border:2px solid red;
 }
